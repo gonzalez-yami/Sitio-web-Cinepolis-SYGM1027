@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!-- Indica al navegador que este es un documento HTML5 -->
+<html lang="es">
+<head>
+  <!-- Especifica que el texto usa caracteres en español (acentos, ñ) -->
+  <meta charset="UTF-8">
+  <!-- Título que aparece en la pestaña del navegador -->
+  <title>Cinépolis</title>
+  
+  <style>
+    /* Estilos generales para todo el cuerpo de la página */
+    body {
+      margin: 0; /* Quita el margen blanco por defecto del navegador */
+      font-family: Arial, sans-serif; /* Tipo de letra accesible y limpia */
+      background-color: #0b111e; /* Fondo azul muy oscuro */
+      color: white; /* Texto en blanco para hacer contraste */
+    }
+
+    /* Barra superior de navegación */
+    header {
+      background-color: #080d19; /* Fondo un poco más oscuro que el cuerpo */
+      padding: 15px 20px; /* Espacio interno */
+      display: flex; /* Activa el modo de diseño flexible */
+      justify-content: space-between; /* Empuja el logo a la izquierda y el menú a la derecha */
+      align-items: center; /* Centra los elementos verticalmente */
+      position: sticky; /* Mantiene la barra fija arriba al bajar en la página */
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Estilo del texto del logo */
+    .logo {
+      font-size: 20px; /* Tamaño de letra */
+      font-weight: bold; /* Letra en negrita */
+      color: #3b82f6; /* Color azul brillante */
+    }
+
+    /* Enlaces dentro del menú superior */
+    nav a {
+      color: #cccccc; /* Color gris claro */
+      text-decoration: none; /* Quita el subrayado automático */
+      margin-left: 12px; /* Separa los enlaces entre sí */
+      font-size: 13px; /* Tamaño de letra */
+    }
+
+    /* Botón destacado del menú superior */
+    .btn-login {
+      background-color: #eab308; /* Fondo amarillo */
+      color: black; /* Letra negra */
+      padding: 5px 10px; /* Relleno para darle forma de botón */
+      border-radius: 4px; /* Redondea los bordes */
+      font-weight: bold; /* Texto resaltado */
+    }
+
+    /* Sección de la barra publicitaria */
+    .banner {
+      background-color: #1e1b4b; /* Fondo morado oscuro */
+      padding: 20px; /* Espacio interno */
+      text-align: center; /* Centra todo el texto del banner */
+    }
+
+    /* Contenedor principal donde va la cartelera */
+    main {
+      padding: 20px; /* Espaciado interno */
+      max-width: 900px; /* Ancho máximo para pantallas grandes */
+      margin: auto; /* Centra el contenedor horizontalmente */
+    }
+
+    /* Menú desplegable para elegir cine */
+    select {
+      width: 100%; /* Ocupa todo el ancho disponible */
+      padding: 10px; /* Relleno cómodo */
+      margin-bottom: 20px; /* Separa de la cartelera */
+      background-color: #1e293b; /* Fondo azul grisáceo */
+      color: white; /* Texto blanco */
+      border: 1px solid #334155; /* Borde delgado */
+      border-radius: 5px; /* Esquinas redondeadas */
+    }
+
+    /* Cuadrícula organizada para mostrar las tarjetas */
+    .grid {
+      display: flex; /* Organiza los elementos en línea */
+      flex-wrap: wrap; /* Pasa elementos a la siguiente fila si no caben */
+      gap: 20px; /* Separa las tarjetas entre sí */
+      justify-content: center; /* Centra las tarjetas */
+    }
+
+    /* Cada tarjeta individual de película */
+    .card {
+      background-color: #1e293b; /* Fondo oscuro de la tarjeta */
+      width: 250px; /* Ancho fijo para cada película */
+      border-radius: 8px; /* Bordes redondeados */
+      padding: 10px; /* Espacio interno */
+      box-sizing: border-box; /* Mantiene el ancho exacto */
+    }
+
+    /* Ajuste para los pósters de las películas */
+    .card img {
+      width: 100%; /* Ocupa todo el ancho de la tarjeta */
+      height: 320px; /* Altura fija */
+      object-fit: cover; /* Recorta sin deformar la imagen */
+      border-radius: 5px; /* Bordes redondeados */
+    }
+
+    /* Título de la película */
+    .card h3 {
+      font-size: 16px;
+      margin: 10px 0 5px 0;
+    }
+
+    /* Texto secundario de la tarjeta */
+    .card p {
+      font-size: 12px;
+      color: #aaa;
+      margin: 2px 0;
+    }
+
+    /* ESTILOS DEL CLUB CINÉPOLIS (Integrados al final) */
+    .club-container {
+      max-width: 400px; /* Ajusta el ancho para que luzca bien abajo */
+      margin: 40px auto 10px auto; /* Centra la sección del Club */
+      background-color: #121a2d; /* Fondo contenedor del club */
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+    }
+
+    /* Cajitas de cada formulario del Club */
+    .seccion-club {
+      background-color: #0b111e;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border: 1px solid #1e293b;
+    }
+
+    /* Compensación de desplazamiento para que el menú fijo no tape los títulos */
+    .titulo-ancla {
+      margin: 0;
+      text-align: center;
+      scroll-margin-top: 70px; /* Ajusta la llegada del anclaje justo debajo de la barra superior */
+    }
+
+    /* Etiquetas de los formularios */
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    /* Entradas de texto de los formularios */
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      background-color: #1e293b;
+      color: white;
+      border: 1px solid #334155;
+      border-radius: 4px;
+    }
+
+    /* Botones de acción del formulario */
+    .btn-enviar {
+      width: 100%;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Pie de página (Footer) */
+    footer {
+      background-color: #040814;
+      padding: 30px 20px;
+      margin-top: 40px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-col :is(h4, p) {
+      margin: 4px 0;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .footer-col {
+      min-width: 150px;
+    }
+
+    .footer-col h4 {
+      font-size: 14px;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .footer-col p {
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENÚ SUPERIOR CON ANCLAJES -->
+  <header>
+    <div class="logo">Cinépolis</div>
+    <nav>
+      <!-- Enlaces directos hacia cada título por su id (#) -->
+      <a href="#cartelera">Cartelera</a>
+      <a href="#estrenos">Estrenos</a>
+      <a href="#login">Iniciar Sesión</a>
+      <a href="#registro">Registrarse</a>
+      <a href="#tarjeta">Tarjeta Club</a>
+    </nav>
+  </header>
+
+  <!-- BANNER PUBLICITARIO -->
+  <div class="banner">
+    <p style="color: #ec4899; margin: 0; font-size: 12px;"><b>PELICULAS</b></p>
+    <h2 style="margin: 5px 0;">CINEPOLIS</h2>
+  
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+    
+    <!-- SELECTOR DE CINE -->
+    <select>
+      <option value="">Selecciona tu cine...</option>
+      <option value="1">Cinépolis Las Misiones</option>
+      <option value="2">Cinépolis Las Torres</option>
+    </select>
+
+    <!-- SECCIÓN: CARTELERA -->
+    <h2 id="cartelera" style="scroll-margin-top: 70px;">Cartelera</h2>
+    <div class="grid">
+      
+      <div class="card">
+        <img src="StreetFighter.jpg" alt="Street Fighter">
+        <h3>Street Fighter</h3>
+        <p>Clasificación: B | 119 min</p>
+        <p><b>Drama / Accion</b></p>
+      </div>
+
+      <div class="card">
+        <img src="Ballena.jpg" alt="La Caída De La Ballena">
+        <h3>La Caída De La Ballena</h3>
+        <p>Clasificación: B | 106 min</p>
+        <p><b>Suspenso</b></p>
+      </div>
+
+      <div class="card">
+        <img src="Fauno.jpg" alt="El Laberinto Del Fauno">
+        <h3>El Laberinto Del Fauno</h3>
+        <p>Clasificación: TBC | 118 min</p>
+        <p><b>Drama / Fantasía</b></p>
+      </div>
+
+    </div>
+
+    <!-- SECCIÓN: ESTRENOS -->
+    <h2 id="estrenos" style="margin-top: 40px; scroll-margin-top: 70px;">Próximos Estrenos</h2>
+    <div class="grid">
+      
+      <div class="card">
+        <img src="Corazon.jpg" alt="El Corazón De La Bestia">
+        <h3>El Corazón De La Bestia</h3>
+        <p>Clasificación: B | 101 min</p>
+        <p><b>Drama / Accion</b></p>
+      </div>
+
+      <div class="card">
+        <img src="Verity.jpg" alt="Verity">
+        <h3>Verity</h3>
+        <p>Clasificación: B15 | 107 min</p>
+        <p><b>Suspenso</b></p>
+      </div>
+
+      <div class="card">
+        <img src="Digger.jpg" alt="Digger">
+        <h3>Digger</h3>
+        <p>Clasificación: B15 | 129 min</p>
+        <p><b>Drama / Comedia</b></p>
+      </div>
+
+    </div>
+
+    <!-- SECCIÓN: CLUB CINÉPOLIS -->
+    <div class="club-container">
+      <h2 style="margin-bottom: 5px;">Club Cinépolis</h2>
+
+      <!-- FORMULARIO 1: INICIAR SESIÓN -->
+      <div class="seccion-club">
+        <!-- El id="login" está colocado directamente en el título h3 -->
+        <h3 id="login" class="titulo-ancla">Iniciar Sesión</h3>
+        <form>
+          <label>Correo o Teléfono:</label>
+          <input type="text" placeholder="correo@ejemplo.com">
+
+          <label>Contraseña:</label>
+          <input type="password" placeholder="••••••••">
+
+          <button type="button" class="btn-enviar">Entrar</button>
+        </form>
+      </div>
+
+      <!-- FORMULARIO 2: REGISTRO -->
+      <div class="seccion-club">
+        <!-- El id="registro" está colocado directamente en el título h3 -->
+        <h3 id="registro" class="titulo-ancla">Registrarte</h3>
+        <form>
+          <label>Correo Electrónico:</label>
+          <input type="email" placeholder="correo@ejemplo.com">
+
+          <label>Contraseña:</label>
+          <input type="password" placeholder="••••••••">
+
+          <label>Ciudad:</label>
+          <input type="text" placeholder="Ej. Ciudad de México">
+
+          <label>Código Postal:</label>
+          <input type="text" placeholder="00000">
+
+          <label>Nombre Completo:</label>
+          <input type="text" placeholder="Tu nombre y apellidos">
+
+          <label>Fecha de Nacimiento:</label>
+          <input type="date">
+
+          <button type="button" class="btn-enviar">Registrarse</button>
+        </form>
+      </div>
+
+      <!-- FORMULARIO 3: TARJETA CLUB -->
+      <div class="seccion-club">
+        <!-- El id="tarjeta" está colocado directamente en el título h3 -->
+        <h3 id="tarjeta" class="titulo-ancla">Tarjeta Cinépolis Club</h3>
+        <form>
+          <label>Correo Electrónico:</label>
+          <input type="email" placeholder="correo@ejemplo.com">
+
+          <label>Número de Tarjeta:</label>
+          <input type="text" placeholder="16 dígitos de tu tarjeta">
+
+          <label>Nombre Completo:</label>
+          <input type="text" placeholder="Nombre en la tarjeta">
+
+          <label>Fecha de Nacimiento:</label>
+          <input type="date">
+
+          <button type="button" class="btn-enviar">Vincular Tarjeta</button>
+        </form>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <footer>
+    <div class="footer-grid">
+      
+      <div class="footer-col">
+        <h4>Cartelera</h4>
+        <p>Garantía Cinépolis</p>
+        <p>+Que Cine</p>
+        <p>Muestras y festivales</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legales</h4>
+        <p>Términos y condiciones</p>
+        <p>Aviso de privacidad</p>
+        <p>Términos Cinecash</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Políticas</h4>
+        <p>Políticas generales</p>
+        <p><b>Línea de Denuncia</b></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>¿Quiénes somos?</h4>
+        <p>Próximas Aperturas</p>
+        <p>Ventas Corporativas</p>
+        <p>Cinépolis Jobs</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p><b>Atención a clientes</b></p>
+        <p>Tel: 552 122 6060</p>
+        <p>aac@atencioncinepolis.com</p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
